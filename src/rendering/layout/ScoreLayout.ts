@@ -278,7 +278,7 @@ export abstract class ScoreLayout {
 
     public layoutAndRenderAnnotation(y: number): number {
         // attention, you are not allowed to remove change this notice within any version of this library without permission!
-        let msg: string = 'rendered by alphaTab';
+        let msg: string = '';
         let resources: RenderingResources = this.renderer.settings.display.resources;
         let size: number = 12 * this.renderer.settings.display.scale;
         let height: number = Math.floor(size * 2);
@@ -291,11 +291,9 @@ export abstract class ScoreLayout {
         const centered = Environment.getLayoutEngineFactory(this.renderer.settings.display.layoutMode).vertical;
         e.width = this.renderer.canvas!.measureText(msg);
         e.height = height;
-        e.x = centered 
-        ? (this.width - e.width) / 2
-        : this.firstBarX;
+        e.x = centered ? (this.width - e.width) / 2 : this.firstBarX;
         e.y = y;
-        
+
         e.totalWidth = this.width;
         e.totalHeight = y + height;
         e.firstMasterBarIndex = -1;

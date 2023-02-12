@@ -331,8 +331,8 @@ export class AlphaTabApiBase<TSettings> {
                 this._cursorWrapper.width = result.totalWidth;
                 this._cursorWrapper.height = result.totalHeight;
             }
-            
-            if(result.width > 0 || result.height > 0) {
+
+            if (result.width > 0 || result.height > 0) {
                 this.uiFacade.beginAppendRenderResults(result);
             }
         } else {
@@ -1025,7 +1025,7 @@ export class AlphaTabApiBase<TSettings> {
                         if (
                             nextBeatBoundings &&
                             nextBeatBoundings.barBounds.masterBarBounds.staveGroupBounds ===
-                            barBoundings.staveGroupBounds
+                                barBoundings.staveGroupBounds
                         ) {
                             nextBeatX = nextBeatBoundings.visualBounds.x;
                         }
@@ -1148,8 +1148,12 @@ export class AlphaTabApiBase<TSettings> {
         if (this.settings.player.enableUserInteraction) {
             // for the selection ensure start < end
             if (this._selectionEnd) {
-                let startTick: number = this._tickCache?.getBeatStart(this._selectionStart!.beat) ?? this._selectionStart!.beat.absolutePlaybackStart;
-                let endTick: number = this._tickCache?.getBeatStart(this._selectionEnd!.beat) ?? this._selectionEnd!.beat.absolutePlaybackStart;
+                let startTick: number =
+                    this._tickCache?.getBeatStart(this._selectionStart!.beat) ??
+                    this._selectionStart!.beat.absolutePlaybackStart;
+                let endTick: number =
+                    this._tickCache?.getBeatStart(this._selectionEnd!.beat) ??
+                    this._selectionEnd!.beat.absolutePlaybackStart;
                 if (endTick < startTick) {
                     let t: SelectionInfo = this._selectionStart!;
                     this._selectionStart = this._selectionEnd;
@@ -1296,7 +1300,7 @@ export class AlphaTabApiBase<TSettings> {
         });
     }
 
-    private cursorSelectRange(startBeat: SelectionInfo | null, endBeat: SelectionInfo | null): void {
+    public cursorSelectRange(startBeat: SelectionInfo | null, endBeat: SelectionInfo | null): void {
         let cache: BoundsLookup | null = this.renderer.boundsLookup;
         if (!cache) {
             return;
