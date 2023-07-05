@@ -15,7 +15,7 @@ plugins {
     id("com.android.library")
     `maven-publish`
     signing
-    id("org.jetbrains.dokka") version "1.7.20"
+    id("org.jetbrains.dokka") version "1.8.20"
 
     // iOS
     //    kotlin("native.cocoapods")
@@ -25,7 +25,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.2")
             }
             kotlin.srcDirs("../../../dist/lib.kotlin/commonMain/generated")
         }
@@ -58,8 +58,8 @@ kotlin {
     sourceSets {
         val androidMain by getting {
             dependencies {
-                implementation("androidx.core:core-ktx:1.9.0")
-                implementation("androidx.appcompat:appcompat:1.6.0")
+                implementation("androidx.core:core-ktx:1.10.1")
+                implementation("androidx.appcompat:appcompat:1.6.1")
             }
         }
 
