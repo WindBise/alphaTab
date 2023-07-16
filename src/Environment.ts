@@ -57,6 +57,7 @@ import { WebPlatform } from '@src/platform/javascript/WebPlatform';
 import { IntersectionObserverPolyfill } from '@src/platform/javascript/IntersectionObserverPolyfill';
 import { AlphaSynthWebWorklet } from '@src/platform/javascript/AlphaSynthAudioWorkletOutput';
 import { AlphaTabError, AlphaTabErrorType } from './AlphaTabError';
+import { BinaryImporter } from './importer/BinaryImporter';
 
 export class LayoutEngineFactory {
     public readonly vertical: boolean;
@@ -226,7 +227,7 @@ export class Environment {
             // WebPack currently requires this exact syntax: new Worker(new URL(..., import.meta.url)))
             // The module `@coderline/alphatab` will be resolved by WebPack to alphaTab consumed as library
             // this will not work with CDNs because worker start scripts need to have the same origin like
-            // the current browser. 
+            // the current browser.
 
             // https://github.com/webpack/webpack/discussions/14066
 
@@ -237,7 +238,10 @@ export class Environment {
         }
 
         if (!scriptFile) {
-            throw new AlphaTabError(AlphaTabErrorType.General, "Could not detect alphaTab script file, cannot initialize renderer");
+            throw new AlphaTabError(
+                AlphaTabErrorType.General,
+                'Could not detect alphaTab script file, cannot initialize renderer'
+            );
         }
 
         try {
@@ -250,8 +254,7 @@ export class Environment {
                 const blob: Blob = new Blob([script]);
                 return new Worker(URL.createObjectURL(blob));
             }
-        }
-        catch (e) {
+        } catch (e) {
             Logger.warning('Rendering', 'Could not create inline worker, fallback to normal worker');
             return new Worker(scriptFile);
         }
@@ -350,7 +353,8 @@ export class Environment {
             new Gp7Importer(),
             new MusicXmlImporter(),
             new CapellaImporter(),
-            new AlphaTexImporter()
+            new AlphaTexImporter(),
+            new BinaryImporter()
         ];
     }
 
@@ -555,7 +559,9 @@ export class Environment {
                     this.append(...nodes);
                 };
                 (Document.prototype as Document).replaceChildren = (Element.prototype as Element).replaceChildren;
-                (DocumentFragment.prototype as DocumentFragment).replaceChildren = (Element.prototype as Element).replaceChildren;
+                (DocumentFragment.prototype as DocumentFragment).replaceChildren = (
+                    Element.prototype as Element
+                ).replaceChildren;
             }
             if (!('replaceAll' in String.prototype)) {
                 (String.prototype as any).replaceAll = function (str: string, newStr: string) {
