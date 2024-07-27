@@ -29,6 +29,8 @@ import { WebPlatform } from '@src/platform/javascript/WebPlatform';
 import { AlphaTabError, AlphaTabErrorType } from '@src/AlphaTabError';
 import { AlphaSynthAudioWorkletOutput } from '@src/platform/javascript/AlphaSynthAudioWorkletOutput';
 import { ScalableHtmlElementContainer } from './ScalableHtmlElementContainer';
+import { PlayerOutputMode } from '@src/PlayerSettings';
+import { SettingsJson } from '@src/generated/SettingsJson';
 
 /**
  * @target web
@@ -138,7 +140,7 @@ export class BrowserUiFacade implements IUiFacade<unknown> {
                     // missing result or result not matching layout -> request render
                     if (placeholder.renderedResultId !== placeholder.layoutResultId) {
                         if (this._resultIdToElementLookup.has(placeholder.layoutResultId!)) {
-                            if(placeholder.resultState !== ResultState.RenderRequested) {
+                            if (placeholder.resultState !== ResultState.RenderRequested) {
                                 placeholder.resultState = ResultState.RenderRequested;
                                 this._api.renderer.renderResult(placeholder.layoutResultId!);
                             } else {
@@ -165,7 +167,7 @@ export class BrowserUiFacade implements IUiFacade<unknown> {
         return new AlphaTabWorkerScoreRenderer<unknown>(this._api, this._api.settings);
     }
 
-    public initialize(api: AlphaTabApiBase<unknown>, raw: any | Settings): void {
+    public initialize(api: AlphaTabApiBase<unknown>, raw: SettingsJson | Settings): void {
         this._api = api;
         let settings: Settings;
         if (raw instanceof Settings) {
@@ -498,35 +500,23 @@ export class BrowserUiFacade implements IUiFacade<unknown> {
      * initializes a alphaSynth version for the client.
      */
     public createWorkerPlayer(): IAlphaSynth | null {
-        let alphaSynthScriptFile: string | null = Environment.scriptFile;
-        if (!alphaSynthScriptFile) {
-            Logger.error('Player', 'alphaTab script file could not be detected, player cannot initialize');
-            return null;
-        }
-
         let player: AlphaSynthWebWorkerApi | null = null;
         let supportsScriptProcessor: boolean = 'ScriptProcessorNode' in window;
 
-        // Once https://github.com/webpack/webpack/issues/11543 is decided
-        // we can support audio worklets together with WebPack
         let supportsAudioWorklets: boolean =
-            window.isSecureContext && 'AudioWorkletNode' in window && !Environment.isWebPackBundled;
+            window.isSecureContext && 'AudioWorkletNode' in window;
 
-        if (supportsAudioWorklets) {
+        if (supportsAudioWorklets && this._api.settings.player.outputMode === PlayerOutputMode.WebAudioAudioWorklets) {
             Logger.debug('Player', 'Will use webworkers for synthesizing and web audio api with worklets for playback');
             player = new AlphaSynthWebWorkerApi(
-                new AlphaSynthAudioWorkletOutput(),
-                alphaSynthScriptFile,
-                this._api.settings.core.logLevel,
-                this._api.settings.player.bufferTimeInMilliseconds
+                new AlphaSynthAudioWorkletOutput(this._api.settings),
+                this._api.settings
             );
         } else if (supportsScriptProcessor) {
-            Logger.debug('Player', 'Will use webworkers for synthesizing and web audio api for playback');
+            Logger.debug('Player', 'Will use webworkers for synthesizing and web audio api with ScriptProcessor for playback');
             player = new AlphaSynthWebWorkerApi(
                 new AlphaSynthScriptProcessorOutput(),
-                alphaSynthScriptFile,
-                this._api.settings.core.logLevel,
-                this._api.settings.player.bufferTimeInMilliseconds
+                this._api.settings
             );
         }
 

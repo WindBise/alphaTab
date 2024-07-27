@@ -29,8 +29,20 @@ export class DisplaySettingsSerializer {
         o.set("startbar", obj.startBar);
         o.set("barcount", obj.barCount);
         o.set("barcountperpartial", obj.barCountPerPartial);
+        o.set("justifylastsystem", obj.justifyLastSystem);
         o.set("resources", RenderingResourcesSerializer.toJson(obj.resources));
         o.set("padding", obj.padding);
+        o.set("firstsystempaddingtop", obj.firstSystemPaddingTop);
+        o.set("systempaddingtop", obj.systemPaddingTop);
+        o.set("systempaddingbottom", obj.systemPaddingBottom);
+        o.set("lastsystempaddingbottom", obj.lastSystemPaddingBottom);
+        o.set("systemlabelpaddingleft", obj.systemLabelPaddingLeft);
+        o.set("systemlabelpaddingright", obj.systemLabelPaddingRight);
+        o.set("accoladebarpaddingright", obj.accoladeBarPaddingRight);
+        o.set("notationstaffpaddingtop", obj.notationStaffPaddingTop);
+        o.set("notationstaffpaddingbottom", obj.notationStaffPaddingBottom);
+        o.set("effectstaffpaddingtop", obj.effectStaffPaddingTop);
+        o.set("effectstaffpaddingbottom", obj.effectStaffPaddingBottom);
         o.set("systemslayoutmode", obj.systemsLayoutMode as number);
         return o;
     }
@@ -60,8 +72,44 @@ export class DisplaySettingsSerializer {
             case "barcountperpartial":
                 obj.barCountPerPartial = v! as number;
                 return true;
+            case "justifylastsystem":
+                obj.justifyLastSystem = v! as boolean;
+                return true;
             case "padding":
-                obj.padding = v as number[] | null;
+                obj.padding = v! as number[];
+                return true;
+            case "firstsystempaddingtop":
+                obj.firstSystemPaddingTop = v! as number;
+                return true;
+            case "systempaddingtop":
+                obj.systemPaddingTop = v! as number;
+                return true;
+            case "systempaddingbottom":
+                obj.systemPaddingBottom = v! as number;
+                return true;
+            case "lastsystempaddingbottom":
+                obj.lastSystemPaddingBottom = v! as number;
+                return true;
+            case "systemlabelpaddingleft":
+                obj.systemLabelPaddingLeft = v! as number;
+                return true;
+            case "systemlabelpaddingright":
+                obj.systemLabelPaddingRight = v! as number;
+                return true;
+            case "accoladebarpaddingright":
+                obj.accoladeBarPaddingRight = v! as number;
+                return true;
+            case "notationstaffpaddingtop":
+                obj.notationStaffPaddingTop = v! as number;
+                return true;
+            case "notationstaffpaddingbottom":
+                obj.notationStaffPaddingBottom = v! as number;
+                return true;
+            case "effectstaffpaddingtop":
+                obj.effectStaffPaddingTop = v! as number;
+                return true;
+            case "effectstaffpaddingbottom":
+                obj.effectStaffPaddingBottom = v! as number;
                 return true;
             case "systemslayoutmode":
                 obj.systemsLayoutMode = JsonHelper.parseEnum<SystemsLayoutMode>(v, SystemsLayoutMode)!;
