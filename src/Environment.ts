@@ -662,9 +662,7 @@ export class Environment {
                     this.append(...nodes);
                 };
                 (Document.prototype as Document).replaceChildren = (Element.prototype as Element).replaceChildren;
-                (DocumentFragment.prototype as DocumentFragment).replaceChildren = (
-                    Element.prototype as Element
-                ).replaceChildren;
+                (DocumentFragment.prototype as DocumentFragment).replaceChildren = (Element.prototype as Element).replaceChildren;
             }
             if (!('replaceAll' in String.prototype)) {
                 (String.prototype as any).replaceAll = function (str: string, newStr: string) {

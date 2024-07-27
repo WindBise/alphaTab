@@ -1158,12 +1158,8 @@ export class AlphaTabApiBase<TSettings> {
             this.settings.player.enableUserInteraction
         ) {
             if (this._selectionEnd) {
-                let startTick: number =
-                    this._tickCache?.getBeatStart(this._selectionStart!.beat) ??
-                    this._selectionStart!.beat.absolutePlaybackStart;
-                let endTick: number =
-                    this._tickCache?.getBeatStart(this._selectionEnd!.beat) ??
-                    this._selectionEnd!.beat.absolutePlaybackStart;
+                let startTick: number = this._tickCache?.getBeatStart(this._selectionStart!.beat) ?? this._selectionStart!.beat.absolutePlaybackStart;
+                let endTick: number = this._tickCache?.getBeatStart(this._selectionEnd!.beat) ?? this._selectionEnd!.beat.absolutePlaybackStart;
                 if (endTick < startTick) {
                     let t: SelectionInfo = this._selectionStart!;
                     this._selectionStart = this._selectionEnd;
