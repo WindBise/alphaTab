@@ -4,6 +4,7 @@ import { Font, FontStyle, FontWeight } from '@src/model/Font';
 /**
  * This public class contains central definitions for controlling the visual appearance.
  * @json
+ * @json_declaration
  */
 export class RenderingResources {
     private static sansFont: string = 'Arial, sans-serif';

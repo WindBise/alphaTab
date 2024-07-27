@@ -861,7 +861,13 @@ export class GpifParser {
 
     private parseDiagramItemForChord(chord: Chord, node: XmlNode): void {
         chord.name = node.getAttribute('name');
-        let diagram: XmlNode = node.findChildElement('Diagram')!;
+        
+        let diagram = node.findChildElement('Diagram');
+        if(!diagram) {
+            chord.showDiagram = false;
+            chord.showFingering = false;
+            return;
+        }
         let stringCount: number = parseInt(diagram.getAttribute('stringCount'));
         let baseFret: number = parseInt(diagram.getAttribute('baseFret'));
         chord.firstFret = baseFret + 1;
@@ -1610,7 +1616,8 @@ export class GpifParser {
                         const id: string = c.getAttribute('id');
                         switch (id) {
                             case '1124139520':
-                                bar.displayScale = parseFloat(c.findChildElement('Double')!.innerText);
+                                const childNode = c.findChildElement('Double') ?? c.findChildElement('Float');
+                                bar.displayScale = parseFloat(childNode!.innerText);
                                 break;
                         }
                         break;
