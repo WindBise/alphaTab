@@ -1252,7 +1252,7 @@ export class GpifWriter {
                 const fretToStrings = new Map<number, number[]>();
 
                 for (let i = 0; i < chord.strings.length; i++) {
-                    let chordFret = chord.strings[i];
+                    let chordFret = chord.strings[i].fret;
                     if (chordFret !== -1) {
                         const fretNode = diagram.addElement('Fret');
                         const chordString = (chord.strings.length - 1 - i);
