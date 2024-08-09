@@ -20,8 +20,8 @@ export class BinaryImporter extends ScoreImporter {
         if (!data) {
             throw new UnsupportedFormatError('No data file found in zip');
         }
-        let lowcase = data.toLowerCase();
-        return JsonConverter.jsonToScore(lowcase, this.settings);
+        let lowercase = data.toLowerCase();
+        return JsonConverter.jsonToScore(lowercase, this.settings);
     }
 }
 //# sourceMappingURL=BinaryImporter.js.map
