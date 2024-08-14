@@ -62,8 +62,7 @@ export class ScoreLoader {
         xhr.send();
     }
 
-    public static loadJsonFromGPFile(data: Uint8Array) {
-        const score = ScoreLoader.loadScoreFromBytes(data);
+    public static scoreToJson(score: Score) {
         return JsonConverter.scoreToJson(score);
     }
 
