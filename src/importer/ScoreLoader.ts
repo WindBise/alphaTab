@@ -62,6 +62,11 @@ export class ScoreLoader {
         xhr.send();
     }
 
+    public static loadJsonFromGPFile(data: Uint8Array) {
+        const score = ScoreLoader.loadScoreFromBytes(data);
+        return JsonConverter.scoreToJson(score);
+    }
+
     /**
      * Loads the score from the given binary data.
      * @param data The binary data containing a score in any known file format.
