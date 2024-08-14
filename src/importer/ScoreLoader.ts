@@ -1,6 +1,6 @@
 import { Environment } from '@src/Environment';
 import { FileLoadError } from '@src/FileLoadError';
-
+import { JsonConverter } from '@src/model/JsonConverter';
 import { ScoreImporter } from '@src/importer/ScoreImporter';
 import { UnsupportedFormatError } from '@src/importer/UnsupportedFormatError';
 import { ByteBuffer } from '@src/io/ByteBuffer';
